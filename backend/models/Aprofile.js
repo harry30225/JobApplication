@@ -32,6 +32,28 @@ const AprofileSchema = new mongoose.Schema({
             },
         }
     ],
+    applications: [
+        {
+            job: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'job'
+            },
+            sop: {
+                type: String,
+            },
+            rejected: {
+                type: Boolean,
+                default: false
+            },
+            accepted: {
+                type: String,
+                default: false
+            },
+            dateofjoining: {
+                type: Date
+            }
+        }
+    ],
     rating: {
         type: String,
     }

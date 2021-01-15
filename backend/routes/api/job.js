@@ -10,11 +10,12 @@ const Job = require('../../models/Job');
 const User = require('../../models/User');
 
 // @route       GET api/job
-// @desc        GET all jobs
+// @desc        GET all active jobs
 // @access      Public
 router.get('/', async (req, res) => {
     try {
-        const Jobs = await Job.find().populate('user', ['name , email']);
+        let Jobs = await Job.find().populate('user', ['name , email']);
+        Jobs = Jobs.filter(job => job.deadline > Date.now());
         res.json(Jobs);
     } catch (err) {
         console.error(err.message);
@@ -30,8 +31,10 @@ router.post('/', [auth, [
     check('skills', 'Skills are required').not().isEmpty(),
     check('typeofjob', 'Type of Job is required').not().isEmpty(),
     check('salary').not().isEmpty(),
-    check('duration').not().isEmpty().isIn(['0', '1', '2', '3', '4', '5', '6'])
-
+    check('duration').not().isEmpty().isIn(['0', '1', '2', '3', '4', '5', '6']),
+    check('application').not().isEmpty(),
+    check('position').not().isEmpty(),
+    check('deadline').not().isEmpty()
 ]], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -40,7 +43,7 @@ router.post('/', [auth, [
     const {
         title,
         application,
-        positon,
+        position,
         deadline,
         skills,
         typeofjob,
@@ -57,23 +60,15 @@ router.post('/', [auth, [
     if (salary) jobFields.salary = salary;
     jobFields.maxap = {}
     if (application) jobFields.maxap.application = application;
-    if (positon) jobFields.maxap.position = position;
+    if (position) jobFields.maxap.position = position;
     if (skills) {
         jobFields.skills = skills.split(',').map(skills => skills.trim());
     }
 
-    try {
-        let job = await Job.findOne({ user: req.user.id });
-        if (job) {
-            job = await Job.findOneAndUpdate(
-                { user: req.user.id },
-                { $set: jobFields },
-                { new: true }
-            );
-            return res.json(job);
-        }
+    jobFields.rating = '0';
 
-        job = new Job(jobFields);
+    try {
+        let job = new Job(jobFields);
         await job.save();
         return res.json(job);
     } catch (err) {
@@ -82,6 +77,8 @@ router.post('/', [auth, [
     }
 
 });
+
+
 
 
 module.exports = router;

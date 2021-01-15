@@ -60,7 +60,7 @@ router.post('/skills', [auth, [
             );
             return res.json(aprofile);
         }
-
+        aprofileFields.rating = '0';
         // Create
         aprofile = new Aprofile(aprofileFields);
         await aprofile.save()

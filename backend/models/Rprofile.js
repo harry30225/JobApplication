@@ -11,7 +11,7 @@ const RprofileSchema = new mongoose.Schema({
     },
     bio: {
         type: String
-    }
+    },
 });
 
 module.exports = Rprofile = mongoose.model('rprofile', RprofileSchema)

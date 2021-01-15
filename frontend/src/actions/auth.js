@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alert';
+import { clearAprofile } from './aprofile';
+import { clearRprofile } from './rprofile';
 import setAuthToken from '../utils/setAuthToken';
 
 import {
@@ -74,7 +76,7 @@ export const login = (email, password) => async dispatch => {
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
-        })
+        });
         dispatch(loadUser());
     } catch (err) {
         const errors = err.response.data.errors;
@@ -84,7 +86,7 @@ export const login = (email, password) => async dispatch => {
         }
         dispatch({
             type: LOGIN_FAIL,
-        })
+        });
     }
 };
 
@@ -92,5 +94,7 @@ export const login = (email, password) => async dispatch => {
 export const logoutUser = () => async dispatch => {
     dispatch({
         type: LOGOUT,
-    })
+    });
+    dispatch(clearAprofile());
+    dispatch(clearRprofile());
 };

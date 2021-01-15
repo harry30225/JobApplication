@@ -33,8 +33,51 @@ const JobSchema = new mongoose.Schema({
     salary: {
         type: String
     },
+    applications: [
+        {
+            applicant: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'user'
+            },
+            sop: {
+                type: String
+            },
+            reject: {
+                type: Boolean,
+                default: false
+            },
+            shortlist: {
+                type: Boolean,
+                default: false
+            }
+        }
+    ],
+    shortlisted: [
+        {
+            applicant: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'user'
+            },
+            acccept: {
+                type: Boolean,
+                default: false
+            },
+            refect: {
+                type: Boolean,
+                default: false
+            }
+        }
+    ],
+    selected: [
+        {
+            applicant: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'user'
+            }
+        }
+    ],
     rating: {
-        type: String,
+        type: String
     },
     date: {
         type: Date,
