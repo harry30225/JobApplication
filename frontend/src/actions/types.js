@@ -14,4 +14,6 @@ export const GET_APROFILE = "GET_APROFILE";
 export const CLEAR_APROFILE = "CLEAR_APROFILE";
 export const APROFILE_ERROR = "APROFILE_ERROR";
 export const GET_JOBS = "GET_JOBS";
+export const SEARCH_JOBS = "SEARCH_JOBS";
 export const JOB_ERROR = "JOB_ERROR";
+export const CLEAR_JOBS = "CLEAR_JOBS";

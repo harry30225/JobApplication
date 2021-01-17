@@ -2,6 +2,7 @@ import axios from 'axios';
 import { setAlert } from './alert';
 import { clearAprofile } from './aprofile';
 import { clearRprofile } from './rprofile';
+import { clearJobs } from './job';
 import setAuthToken from '../utils/setAuthToken';
 
 import {
@@ -97,4 +98,5 @@ export const logoutUser = () => async dispatch => {
     });
     dispatch(clearAprofile());
     dispatch(clearRprofile());
+    dispatch(clearJobs());
 };

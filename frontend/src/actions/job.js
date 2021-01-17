@@ -4,6 +4,8 @@ import { setAlert } from './alert';
 import {
     GET_JOBS,
     JOB_ERROR,
+    CLEAR_JOBS,
+    SEARCH_JOBS,
 } from './types';
 
 // get all jobs
@@ -51,3 +53,32 @@ export const addJob = (formData, history) => async dispatch => {
         });
     }
 };
+
+// clear jobs
+export const clearJobs = () => async dispatch => {
+    try {
+        dispatch({
+            type: CLEAR_JOBS
+        });
+    } catch (err) {
+        dispatch({
+            type: JOB_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
+// search based on job title
+export const searchTitle = (search) => async dispatch => {
+    try {
+        dispatch({
+            type: SEARCH_JOBS,
+            payload: search
+        })
+    } catch (err) {
+        dispatch({
+            type: JOB_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}

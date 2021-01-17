@@ -1,6 +1,8 @@
 import {
     GET_JOBS,
     JOB_ERROR,
+    CLEAR_JOBS,
+    SEARCH_JOBS,
 } from '../actions/types';
 
 const initialState = {
@@ -16,6 +18,20 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 jobs: payload,
+                loading: false
+            };
+
+        case CLEAR_JOBS:
+            return {
+                ...state,
+                jobs: [],
+                loading: false
+            };
+
+        case SEARCH_JOBS:
+            return {
+                ...state,
+                jobs: state.jobs.filter(job => job.title === payload),
                 loading: false
             };
 

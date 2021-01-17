@@ -40,12 +40,11 @@ const AddEducation = ({ addEducation, history }) => {
                 <i className="fas fa-graduation-cap"></i> Add any school, bootcamp, etc that
         you have attended
       </p>
-            <small>* = required field</small>
             <form className="form" onSubmit={e => onSubmit(e)}>
                 <div className="form-group">
                     <input
                         type="text"
-                        placeholder="* School or Bootcamp"
+                        placeholder="School or Bootcamp"
                         name="school"
                         value={school}
                         onChange={e => onChange(e)}
@@ -53,7 +52,7 @@ const AddEducation = ({ addEducation, history }) => {
                     />
                 </div>
                 <div className="form-group">
-                    <input type="text" placeholder="* Field Of Study" name="fieldofstudy"
+                    <input type="text" placeholder="Field Of Study" name="fieldofstudy"
                         value={fieldofstudy}
                         onChange={e => onChange(e)} />
                 </div>

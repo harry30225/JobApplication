@@ -14,7 +14,7 @@ const User = require('../../models/User');
 // @access      Public
 router.get('/', async (req, res) => {
     try {
-        let Jobs = await Job.find().populate('user', ['name , email']);
+        let Jobs = await Job.find().populate('user', ['name', 'email']);
         Jobs = Jobs.filter(job => job.deadline > Date.now());
         res.json(Jobs);
     } catch (err) {
