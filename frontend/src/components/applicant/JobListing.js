@@ -6,6 +6,8 @@ import Moment from 'react-moment';
 import { getJobs } from '../../actions/job';
 import Spinner from '../layout/Spinner';
 import SearchFeature from '../layout/SearchFeature';
+import SortFeature from '../layout/SortFeature';
+import FilterFeature from '../layout/FilterFeature';
 
 const JobListing = ({ getJobs, job: { loading, jobs }, aprofile: { aprofile } }) => {
     useEffect(() => {
@@ -23,6 +25,8 @@ const JobListing = ({ getJobs, job: { loading, jobs }, aprofile: { aprofile } })
                         <Link onClick={getJobs} to='/job-listing' className="btn btn-primary m-2"><i className="fa fa-tag"></i> Job Listing</Link>
                         <h1>Job Listing</h1>
                         <SearchFeature />
+                        <SortFeature />
+                        <FilterFeature />
                         {jobs.length > 0 ? (
                             <Fragment>
                                 {jobs.map(job => (

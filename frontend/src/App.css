@@ -20,6 +20,10 @@
     background-color: #fff;
     color: #333;
   }
+
+  select {
+    font-family: 'FontAwesome', 'Second Font name'
+  }
   
   a {
     color: var(--primary-color);

@@ -29,8 +29,8 @@ const Recruiter = ({ getCurrentProfile, rprofile: { loading, rprofile }, auth: {
                         </Link>
                             <Link to="/add-job" className="btn btn-danger">
                                 Add a Job
-                        </Link>
-                            <p className="m-2"><i className="fa fa-address-book"> Contact No. : {rprofile.contactno}</i></p>
+                            <p className="m-2"><i className="fa fa-briefcase"> Contact No. : {rprofile.contactno}</i></p>
+                            </Link>
                             <p className="m-2"><i className="fa fa-briefcase"></i> Bio : {rprofile.bio}</p>
                         </Fragment>
                     )}

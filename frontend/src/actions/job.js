@@ -6,6 +6,8 @@ import {
     JOB_ERROR,
     CLEAR_JOBS,
     SEARCH_JOBS,
+    SORT_JOBS,
+    FILTER_JOBS,
 } from './types';
 
 // get all jobs
@@ -71,10 +73,46 @@ export const clearJobs = () => async dispatch => {
 // search based on job title
 export const searchTitle = (search) => async dispatch => {
     try {
+        //dispatch(getJobs());
+        const res = await axios.get('/api/job');
         dispatch({
             type: SEARCH_JOBS,
-            payload: search
+            payload: { jobs: res.data, search }
         })
+    } catch (err) {
+        dispatch({
+            type: JOB_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
+// sort jobs
+export const sortJobs = (sort) => async dispatch => {
+    const sortArray = sort.split(' ');
+
+    try {
+        dispatch({
+            type: SORT_JOBS,
+            payload: { att: sortArray[0], n: parseInt(sortArray[1]) }
+        })
+    } catch (err) {
+        // console.log(err);
+        dispatch({
+            type: JOB_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
+// filter jobs
+export const filterJobs = (formData) => async dispatch => {
+    const { typeofjob, usalary, lsalary, duration } = formData;
+    try {
+        dispatch({
+            type: FILTER_JOBS,
+            payload: { typeofjob, usalary, lsalary, duration }
+        });
     } catch (err) {
         dispatch({
             type: JOB_ERROR,

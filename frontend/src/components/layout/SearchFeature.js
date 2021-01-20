@@ -16,7 +16,7 @@ const SearchFeature = ({ searchTitle }) => {
     });
     const onSubmit = async e => {
         e.preventDefault();
-        console.log(Searchdata);
+        // console.log(Searchdata);
         searchTitle(search);
     };
 
