@@ -5,6 +5,9 @@ import {
     SEARCH_JOBS,
     SORT_JOBS,
     FILTER_JOBS,
+    APPLY_JOB,
+    EDIT_JOB,
+    DELETE_JOB
 } from '../actions/types';
 
 const initialState = {
@@ -74,6 +77,27 @@ export default function (state = initialState, action) {
                 }),
                 loading: false
             };
+
+        case APPLY_JOB:
+            return {
+                ...state,
+                jobs: state.jobs.map(job => job._id === payload.id ? { ...job, applications: payload.applications } : job),
+                loading: false
+            };
+
+        case EDIT_JOB:
+            return {
+                ...state,
+                jobs: state.jobs.map(job => job._id === payload.id ? { job: payload.job } : job),
+                loading: false
+            };
+
+        case DELETE_JOB:
+            return {
+                ...state,
+                jobs: state.jobs.filter(job => job._id !== payload),
+                loading: false
+            }
 
         case JOB_ERROR:
             return {

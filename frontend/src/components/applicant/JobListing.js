@@ -35,25 +35,25 @@ const JobListing = ({ getJobs, job: { loading, jobs }, aprofile: { aprofile } })
                                         <p className="m-0">Recruiter Name : {job.user.name}</p>
                                         <p className="m-0">Rating : {job.rating}</p>
                                         <p className="m-0">Salary : {job.salary}</p>
-                                        <p className="m-0"> Duration : {job.duration === '0' ? (<span>Indefinite</span>) : (<span>{job.duration}</span>)}</p>
+                                        <p className="m-0"> Duration : {job.duration === '0' ? (<span>Indefinite</span>) : (<span>{job.duration} Month</span>)}</p>
                                         <p className="m-0">Deadline : <Moment format="YYYY/MM/DD">{job.deadline}</Moment></p>
-                                        {/* {parseInt(job.maxap.application) <= job.applications.length || parseInt(job.maxap.position) <= job.selected.length ? (
+                                        {parseInt(job.maxap.application) <= job.applications.length || parseInt(job.maxap.position) <= job.selected.length ? (
                                             <Fragment>
-                                                <Link className="btn btn-danger">Full</Link>
+                                                <Link className="btn btn-danger m-1">Full</Link>
                                             </Fragment>
                                         ) : (
                                                 <Fragment>
-                                                    {aprofile.applications.findIndex(app => app.job.toString() === job._id) === -1 ? (
+                                                    {aprofile.applications.findIndex(app => app.job === job._id) === -1 ? (
                                                         <Fragment>
-                                                            <Link to="!#" className="btn btn-primary"> Apply</Link>
+                                                            <Link to={`/apply-job/${job._id}`} className="btn btn-primary m-1"> Apply</Link>
                                                         </Fragment>
                                                     ) : (
                                                             <Fragment>
-                                                                <Link className="btn btn-warning">Applied</Link>
+                                                                <Link className="btn btn-warning m-1">Applied</Link>
                                                             </Fragment>
                                                         )}
                                                 </Fragment>
-                                            )} */}
+                                            )}
                                     </div>
                                 ))}
                             </Fragment>

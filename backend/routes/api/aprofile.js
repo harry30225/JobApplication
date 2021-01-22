@@ -102,10 +102,44 @@ router.put('/education', [auth, [
     }
     try {
         const aprofile = await Aprofile.findOne({ user: req.user.id });
+        if (!aprofile) {
+            return res.status(404).json({ msg: "Profile not found" });
+        }
         aprofile.education.unshift(newEdu);
 
         await aprofile.save();
-        res.json(aprofile);
+        return res.json(aprofile);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+
+// @route       PUT api/aprofile/application
+// @desc        add profile application
+// @access      private
+
+router.put('/application', auth, async (req, res) => {
+    const {
+        id
+    } = req.body;
+
+    const newJob = {
+        job: id,
+        rejected: false,
+        shortlisted: false,
+        accepted: false
+    }
+    try {
+        const aprofile = await Aprofile.findOne({ user: req.user.id });
+        if (!aprofile) {
+            return res.status(404).json({ msg: "Profile not found" });
+        }
+        aprofile.applications.unshift(newJob);
+
+        await aprofile.save();
+        return res.json(aprofile);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

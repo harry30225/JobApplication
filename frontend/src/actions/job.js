@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
+import { addMyapplication } from './aprofile';
 
 import {
     GET_JOBS,
@@ -8,6 +9,9 @@ import {
     SEARCH_JOBS,
     SORT_JOBS,
     FILTER_JOBS,
+    APPLY_JOB,
+    EDIT_JOB,
+    DELETE_JOB
 } from './types';
 
 // get all jobs
@@ -25,6 +29,38 @@ export const getJobs = () => async dispatch => {
         })
     }
 };
+
+// get applied jobs
+export const getAppliedJobs = () => async dispatch => {
+    try {
+        const res = await axios.get('/api/job/myapplications');
+        dispatch({
+            type: GET_JOBS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: JOB_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        })
+    }
+};
+
+// get jobs made by recruiters
+export const getMadeJobs = () => async dispatch => {
+    try {
+        const res = await axios.get('/api/job/recruiter');
+        dispatch({
+            type: GET_JOBS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: JOB_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        })
+    }
+}
 
 // add a job
 export const addJob = (formData, history) => async dispatch => {
@@ -120,3 +156,83 @@ export const filterJobs = (formData) => async dispatch => {
         });
     }
 }
+
+// apply job
+export const applyJob = (id, sop, history) => async dispatch => {
+    const config = {
+        'headers': {
+            'Content-Type': 'application/json',
+        }
+    };
+    const body = JSON.stringify({ sop });
+    try {
+        const res = await axios.put(`/api/job/applications/${id}`, body, config);
+        dispatch({
+            type: APPLY_JOB,
+            payload: { id, applications: res.data }
+        })
+        dispatch(addMyapplication(id));
+        history.push('/dashboard');
+    } catch (err) {
+        const errors = err.response.data.errors;
+
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
+        dispatch({
+            type: JOB_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
+// edit job
+export const editJob = (id, formData, history) => async dispatch => {
+    const config = {
+        'headers': {
+            'Content-Type': 'application/json',
+        }
+    };
+    try {
+        const res = await axios.put(`/api/job/edit/${id}`, formData, config);
+        dispatch({
+            type: EDIT_JOB,
+            payload: { id, job: res.data }
+        });
+        dispatch(setAlert("Job Edit", "success"));
+
+        history.push('/dashboard');
+
+    } catch (err) {
+        const errors = err.response.data.errors;
+
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
+        dispatch({
+            type: JOB_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};
+
+// delete a job
+export const deleteJob = (id) => async dispatch => {
+    try {
+        await axios.delete(`/api/job/delete/${id}`);
+        dispatch({
+            type: DELETE_JOB,
+            payload: id
+        })
+    } catch (err) {
+        const errors = err.response.data.errors;
+
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
+        dispatch({
+            type: JOB_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};

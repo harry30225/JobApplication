@@ -12,6 +12,10 @@ import AddEducation from './components/forms/AddEducation';
 import EditAprofile from './components/forms/EditAprofile';
 import JobListing from './components/applicant/JobListing';
 import AddJob from './components/forms/AddJob';
+import ApplyJob from './components/forms/ApplyJob';
+import MyApplications from './components/applicant/MyApplications';
+import RecJobListing from './components/recruiter/RecJobListing';
+import EditJob from './components/forms/EditJob';
 import PrivateRoute from './components/routing/PrivateRoute';
 import './App.css';
 //redux stuff
@@ -47,6 +51,10 @@ const App = () => {
               <PrivateRoute exact path="/add-education" component={AddEducation} />
               <PrivateRoute exact path="/job-listing" component={JobListing} />
               <PrivateRoute exact path="/add-job" component={AddJob} />
+              <PrivateRoute exact path="/apply-job/:id" component={ApplyJob} />
+              <PrivateRoute exact path="/my-application" component={MyApplications} />
+              <PrivateRoute exact path="/rec-job-listing" component={RecJobListing} />
+              <PrivateRoute exact path="/edit-job/:id" component={EditJob} />
             </Switch>
           </section>
         </Fragment>

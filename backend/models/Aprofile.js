@@ -38,15 +38,16 @@ const AprofileSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'job'
             },
-            sop: {
-                type: String,
-            },
             rejected: {
                 type: Boolean,
                 default: false
             },
+            shortlisted: {
+                type: Boolean,
+                default: false
+            },
             accepted: {
-                type: String,
+                type: Boolean,
                 default: false
             },
             dateofjoining: {

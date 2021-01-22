@@ -32,12 +32,12 @@ const CreateRprofile = ({ createProfile, history }) => {
                     <input type="text" placeholder="Contact No" name="contactno" value={contactno} onChange={e => onChange(e)} />
                     <small>Contact No.</small>
                 </div>
+
                 <div className="form-group">
-                    <div className="form-group">
-                        <textarea placeholder="A short bio of yourself" name="bio" value={bio} onChange={e => onChange(e)}></textarea>
-                        <small> Your Short Bio</small>
-                    </div>
+                    <textarea placeholder="A short bio of yourself" name="bio" value={bio} onChange={e => onChange(e)}></textarea>
+                    <small> Your Short Bio</small>
                 </div>
+
                 <input type="submit" className="btn btn-primary m-1" value="CreateProfile" />
                 <Link className="btn btn-light m-1" to="/dashboard">Go Back</Link>
             </form>

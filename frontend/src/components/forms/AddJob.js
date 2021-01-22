@@ -37,7 +37,7 @@ const AddJob = ({ setAlert, addJob, history }) => {
         if (parseInt(application) < parseInt(position) || parseInt(salary) < 0) {
 
             if (parseInt(application) < parseInt(position)) {
-                setAlert('Applications must be less than Positions', 'danger');
+                setAlert('Applications must be Greater than Positions', 'danger');
             }
             if (parseInt(salary) < 0) {
                 setAlert('Salary can not be negative', 'danger');
