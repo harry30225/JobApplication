@@ -49,30 +49,10 @@ const JobSchema = new mongoose.Schema({
             shortlist: {
                 type: Boolean,
                 default: false
-            }
-        }
-    ],
-    shortlisted: [
-        {
-            applicant: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'user'
             },
-            acccept: {
+            accepted: {
                 type: Boolean,
                 default: false
-            },
-            refect: {
-                type: Boolean,
-                default: false
-            }
-        }
-    ],
-    selected: [
-        {
-            applicant: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'user'
             }
         }
     ],

@@ -24,6 +24,61 @@ router.get('/', async (req, res) => {
     }
 });
 
+// @route      GET api/job/myapplications
+// @desc       application for the job
+// @access     Private
+
+router.get('/myapplications', auth, async (req, res) => {
+    try {
+        let jobs = await Job.find().populate('user', ['name', 'email']);
+        //console.log(jobs);
+        let aprofile = await Aprofile.findOne({ user: req.user.id });
+        //console.log(aprofile);
+        jobs = jobs.filter(function (job) {
+            if (aprofile.applications.filter(app => app.job.toString() === job._id.toString()).length > 0) {
+                return true
+            }
+            else {
+                return false
+            }
+        });
+        res.json(jobs);
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).send('Server Error');
+    }
+});
+
+// @route      GET api/job/recruiter
+// @desc       Jobs made by recruiters
+// @access     Private
+
+router.get('/recruiter', auth, async (req, res) => {
+    try {
+        let jobs = await Job.find({ user: req.user.id }).populate('user', ['name', 'email']);
+        res.json(jobs);
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).send('Server Error');
+    }
+});
+
+// @route       GET api/job/:id
+// @desc        GET job by id
+// @access      Public
+router.get('/:id', async (req, res) => {
+    try {
+        const job = await Job.findById(req.params.id).populate('user', ['name', 'email']);
+        if (!job) {
+            return res.status(404).json({ msg: 'No job for given Id' });
+        }
+        res.json(job);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 // @route      POST api/job
 // @desc       POST a job
 // @access     Private
@@ -95,7 +150,8 @@ router.put('/applications/:jobId', [auth, [
         applicant: req.user.id,
         sop,
         rejected: false,
-        shortlisted: false
+        shortlisted: false,
+        accepted: false
     }
     try {
         const job = await Job.findById(req.params.jobId);
@@ -115,43 +171,6 @@ router.put('/applications/:jobId', [auth, [
         return res.status(500).send('Server Error');
     }
 })
-
-// @route      GET api/job/myapplications
-// @desc       application for the job
-// @access     Private
-
-router.get('/myapplications', auth, async (req, res) => {
-    try {
-        let jobs = await Job.find().populate('user', ['name', 'email']);
-        const aprofile = await Aprofile.findOne({ user: req.user.id });
-        jobs = jobs.filter(function (job) {
-            if (aprofile.applications.filter(app => app.job.toString() === job._id.toString()).length > 0) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        });
-        res.json(jobs);
-    } catch (err) {
-        console.error(err.message);
-        return res.status(500).send('Server Error');
-    }
-})
-
-// @route      GET api/job/recruiter
-// @desc       Jobs made by recruiters
-// @access     Private
-
-router.get('/recruiter', auth, async (req, res) => {
-    try {
-        const jobs = await Job.find({ user: req.user.id }).populate('user', ['name', 'email']);
-        res.json(jobs);
-    } catch (err) {
-        console.error(err.message);
-        return res.status(500).send('Server Error');
-    }
-});
 
 // @route      PUT api/job/edit/:jobId
 // @desc       Edit the Job

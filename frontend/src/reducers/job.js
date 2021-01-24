@@ -7,10 +7,12 @@ import {
     FILTER_JOBS,
     APPLY_JOB,
     EDIT_JOB,
-    DELETE_JOB
+    DELETE_JOB,
+    GET_JOB
 } from '../actions/types';
 
 const initialState = {
+    job: null,
     jobs: [],
     loading: true,
     error: {}
@@ -26,9 +28,17 @@ export default function (state = initialState, action) {
                 loading: false
             };
 
+        case GET_JOB:
+            return {
+                ...state,
+                job: payload,
+                loading: false
+            };
+
         case CLEAR_JOBS:
             return {
                 ...state,
+                job: null,
                 jobs: [],
                 loading: false
             };

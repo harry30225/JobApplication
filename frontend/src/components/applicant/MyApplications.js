@@ -24,6 +24,22 @@ const MyApplications = ({ getAppliedJobs, job: { jobs, loading }, aprofile: { ap
                                     <p className="m-0">Salary : {job.salary}</p>
                                     <p className="m-0"> Duration : {job.duration === '0' ? (<span>Indefinite</span>) : (<span>{job.duration}</span>)}</p>
                                     <p className="m-0">Deadline : <Moment format="YYYY/MM/DD">{job.deadline}</Moment></p>
+                                    {aprofile.applications.map(app => app.job === job._id && <Fragment>
+                                        {app.rejected === false && app.shortlisted === false && app.accepted === false && <Fragment>
+                                            <p className="m-0">Status : Pending</p>
+                                        </Fragment>}
+                                        {app.rejected === true && app.shortlisted === false && app.accepted === false && <Fragment>
+                                            <p className="m-0">Status : Rejected</p>
+                                        </Fragment>}
+                                        {app.rejected === false && app.shortlisted === true && app.accepted === false && <Fragment>
+                                            <p className="m-0">Status : Shortlisted</p>
+                                        </Fragment>}
+                                        {app.rejected === false && app.shortlisted === false && app.accepted === true && <Fragment>
+                                            <p className="m-0">Status : Accepted</p>
+                                            <p>Date of Joining : <Moment format="YYYY/MM/DD">{app.dateofjoining}</Moment></p>
+                                            {/* Rate the Job */}
+                                        </Fragment>}
+                                    </Fragment>)}
                                 </div>
                             ))}
                         </Fragment>

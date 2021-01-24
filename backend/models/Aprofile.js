@@ -52,6 +52,12 @@ const AprofileSchema = new mongoose.Schema({
             },
             dateofjoining: {
                 type: Date
+            },
+            dateofapplication: {
+                type: Date,
+            },
+            sop: {
+                type: String
             }
         }
     ],

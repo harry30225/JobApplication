@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { getJobs } from '../../actions/job';
+import { setAlert } from '../../actions/alert';
 import Spinner from '../layout/Spinner';
 import SearchFeature from '../layout/SearchFeature';
 import SortFeature from '../layout/SortFeature';
 import FilterFeature from '../layout/FilterFeature';
 
-const JobListing = ({ getJobs, job: { loading, jobs }, aprofile: { aprofile } }) => {
+const JobListing = ({ getJobs, setAlert, job: { loading, jobs }, aprofile: { aprofile } }) => {
     useEffect(() => {
         getJobs();
     }, []);
@@ -37,7 +38,7 @@ const JobListing = ({ getJobs, job: { loading, jobs }, aprofile: { aprofile } })
                                         <p className="m-0">Salary : {job.salary}</p>
                                         <p className="m-0"> Duration : {job.duration === '0' ? (<span>Indefinite</span>) : (<span>{job.duration} Month</span>)}</p>
                                         <p className="m-0">Deadline : <Moment format="YYYY/MM/DD">{job.deadline}</Moment></p>
-                                        {parseInt(job.maxap.application) <= job.applications.length || parseInt(job.maxap.position) <= job.selected.length ? (
+                                        {parseInt(job.maxap.application) <= job.applications.length ? (
                                             <Fragment>
                                                 <Link className="btn btn-danger m-1">Full</Link>
                                             </Fragment>
@@ -45,7 +46,15 @@ const JobListing = ({ getJobs, job: { loading, jobs }, aprofile: { aprofile } })
                                                 <Fragment>
                                                     {aprofile.applications.findIndex(app => app.job === job._id) === -1 ? (
                                                         <Fragment>
-                                                            <Link to={`/apply-job/${job._id}`} className="btn btn-primary m-1"> Apply</Link>
+                                                            {aprofile.applications.filter(app => app.rejected === false).length >= 10 ? (
+                                                                <Fragment>
+                                                                    <Link onClick={() => setAlert('Can not apply for more than 10 Applications', 'danger')} className="btn btn-primary m-1"> Apply </Link>
+                                                                </Fragment>
+                                                            ) : (
+                                                                    <Fragment>
+                                                                        <Link to={`/apply-job/${job._id}`} className="btn btn-primary m-1"> Apply</Link>
+                                                                    </Fragment>
+                                                                )}
                                                         </Fragment>
                                                     ) : (
                                                             <Fragment>
@@ -72,6 +81,7 @@ const JobListing = ({ getJobs, job: { loading, jobs }, aprofile: { aprofile } })
 
 JobListing.propTypes = {
     getJobs: PropTypes.func.isRequired,
+    setAlert: PropTypes.func.isRequired,
     job: PropTypes.object.isRequired,
     aprofile: PropTypes.object.isRequired,
 };
@@ -81,4 +91,4 @@ const mapStateToProps = state => ({
     aprofile: state.aprofile
 });
 
-export default connect(mapStateToProps, { getJobs })(JobListing);
+export default connect(mapStateToProps, { getJobs, setAlert })(JobListing);

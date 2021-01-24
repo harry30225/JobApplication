@@ -11,7 +11,8 @@ import {
     FILTER_JOBS,
     APPLY_JOB,
     EDIT_JOB,
-    DELETE_JOB
+    DELETE_JOB,
+    GET_JOB
 } from './types';
 
 // get all jobs
@@ -20,6 +21,22 @@ export const getJobs = () => async dispatch => {
         const res = await axios.get('/api/job');
         dispatch({
             type: GET_JOBS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: JOB_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        })
+    }
+};
+
+// get Job by Id
+export const getJobById = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/job/${id}`);
+        dispatch({
+            type: GET_JOB,
             payload: res.data
         });
     } catch (err) {
@@ -171,7 +188,7 @@ export const applyJob = (id, sop, history) => async dispatch => {
             type: APPLY_JOB,
             payload: { id, applications: res.data }
         })
-        dispatch(addMyapplication(id));
+        dispatch(addMyapplication(id, sop));
         history.push('/dashboard');
     } catch (err) {
         const errors = err.response.data.errors;

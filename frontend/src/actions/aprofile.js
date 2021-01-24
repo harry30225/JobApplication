@@ -3,8 +3,10 @@ import { setAlert } from './alert';
 
 import {
     GET_APROFILE,
+    GET_APROFILES,
     APROFILE_ERROR,
-    CLEAR_APROFILE
+    CLEAR_APROFILE,
+    SORT_APROFILES
 } from './types';
 
 // get current recruiter profile
@@ -96,13 +98,13 @@ export const clearAprofile = () => async dispatch => {
 };
 
 // add myapplication
-export const addMyapplication = (id) => async dispatch => {
+export const addMyapplication = (id, sop) => async dispatch => {
     const config = {
         'headers': {
             'Content-Type': 'application/json',
         }
     };
-    const body = JSON.stringify({ id });
+    const body = JSON.stringify({ id, sop });
     try {
         const res = await axios.put('/api/aprofile/application', body, config);
         dispatch({
@@ -121,3 +123,93 @@ export const addMyapplication = (id) => async dispatch => {
         });
     }
 }
+
+
+// get all profiles by given job id
+export const getProfilesByJobId = (id) => async dispatch => {
+    try {
+        const res = await axios.get(`/api/aprofile/aprofiles/job/${id}`);
+        dispatch({
+            type: GET_APROFILES,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: APROFILE_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};
+
+// sort Aprofiles
+export const sortAprofiles = (jobId, sort) => async dispatch => {
+    const sortArray = sort.split(' ');
+
+    try {
+        dispatch({
+            type: SORT_APROFILES,
+            payload: { jobId, att: sortArray[0], n: parseInt(sortArray[1]) }
+        })
+    } catch (err) {
+        // console.log(err);
+        dispatch({
+            type: APROFILE_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
+// reject application
+export const rejectApplication = (jobId, aprofileId) => async dispatch => {
+    try {
+        await axios.put(`/api/aprofile/job/reject/${jobId}/${aprofileId}`);
+        dispatch(getProfilesByJobId(jobId));
+    } catch (err) {
+        dispatch({
+            type: APROFILE_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};
+
+// shortlist application
+export const shortlistApplication = (jobId, aprofileId) => async dispatch => {
+    try {
+        await axios.put(`/api/aprofile/job/shortlist/${jobId}/${aprofileId}`);
+        dispatch(getProfilesByJobId(jobId));
+    } catch (err) {
+        dispatch({
+            type: APROFILE_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};
+
+// accept application
+export const acceptApplication = (jobId, aprofileId) => async dispatch => {
+    try {
+        await axios.put(`/api/aprofile/job/accept/${jobId}/${aprofileId}`);
+        dispatch(getProfilesByJobId(jobId));
+    } catch (err) {
+        dispatch({
+            type: APROFILE_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};
+
+// get all profiles accepted by a recruiter
+export const getAcceptedProfileByRec = () => async dispatch => {
+    try {
+        const res = await axios.get('/api/aprofile/aprofiles/recruiter');
+        dispatch({
+            type: GET_APROFILES,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: APROFILE_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};

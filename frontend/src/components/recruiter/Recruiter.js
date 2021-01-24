@@ -33,6 +33,9 @@ const Recruiter = ({ getCurrentProfile, rprofile: { loading, rprofile }, auth: {
                             <Link to="/rec-job-listing" className="btn btn-primary m-2">
                                 Jobs and Applications
                             </Link>
+                            <Link to="/selected-applicants" className="btn btn-dark m-2">
+                                Selected Applicants
+                            </Link>
                             <p className="m-2"><i className="fa fa-briefcase"> Contact No. : {rprofile.contactno}</i></p>
                             <p className="m-2"><i className="fa fa-briefcase"></i> Bio : {rprofile.bio}</p>
                         </Fragment>
