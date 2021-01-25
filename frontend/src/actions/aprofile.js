@@ -6,7 +6,8 @@ import {
     GET_APROFILES,
     APROFILE_ERROR,
     CLEAR_APROFILE,
-    SORT_APROFILES
+    SORT_APROFILES,
+    SORT_SELECTED_APROFILES
 } from './types';
 
 // get current recruiter profile
@@ -213,3 +214,46 @@ export const getAcceptedProfileByRec = () => async dispatch => {
         });
     }
 };
+
+// rate aprofile
+
+export const rateAprofile = (rate, id) => async dispatch => {
+    const config = {
+        'headers': {
+            'Content-Type': 'application/json',
+        }
+    };
+    const body = JSON.stringify({ rate });
+    try {
+        const res = await axios.put(`/api/aprofile/rate/${id}`, body, config);
+        dispatch(getAcceptedProfileByRec());
+    } catch (err) {
+        const errors = err.response.data.errors;
+
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
+        dispatch({
+            type: APROFILE_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};
+
+// sort Aprofiles
+export const sortSelectedAprofiles = (sort) => async dispatch => {
+    const sortArray = sort.split(' ');
+
+    try {
+        dispatch({
+            type: SORT_SELECTED_APROFILES,
+            payload: { att: sortArray[0], n: parseInt(sortArray[1]) }
+        })
+    } catch (err) {
+        // console.log(err);
+        dispatch({
+            type: APROFILE_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}

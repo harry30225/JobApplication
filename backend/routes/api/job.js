@@ -215,6 +215,47 @@ router.put('/edit/:jobId', [auth, [
     }
 })
 
+// @route       PUT api/job/rate/:jobId
+// @desc        Rate Job
+// @access      private
+
+router.put('/rate/:jobId', [auth, [
+    check('rate').not().isEmpty().isIn(['0', '1', '2', '3', '4', '5'])
+]], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array });
+    }
+    const { rate } = req.body;
+    const newRating = {
+        rater: req.user.id,
+        rate
+    };
+    try {
+        const job = await Job.findById(req.params.jobId);
+        if (!job) {
+            return res.status(404).json({ msg: 'No Job for this ID' });
+        }
+        if (job.ratings.filter(rating => rating.rater.toString() === req.user.id).length > 0) {
+            return res.status(400).json({ msg: 'Job is already rated by you' });
+        }
+        job.ratings.unshift(newRating);
+
+        let krate = 0;
+        for (var i = 0; i < job.ratings.length; i++) {
+            krate = krate + parseInt(job.ratings[i].rate);
+        }
+        krate = krate / job.ratings.length;
+        job.rating = krate.toString();
+
+        await job.save();
+        res.json(job);
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).send('Server Error');
+    }
+});
+
 // @route      PUT api/job/delete/:jobId
 // @desc       Delete the Job
 // @access     Private

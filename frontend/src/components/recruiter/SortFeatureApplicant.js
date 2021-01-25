@@ -46,8 +46,8 @@ const SortFeatureApplicant = ({ jobId, sortAprofiles }) => {
                                 <option value=""> None </option>
                                 <option value="name 1"> Name &#xf160;</option>
                                 <option value="name -1"> Name &#xf161;</option>
-                                <option value="date 1"> Date of Joining &#xf160;</option>
-                                <option value="date -1"> Date Of Joining &#xf161;</option>
+                                <option value="date 1"> Date of Application &#xf160;</option>
+                                <option value="date -1"> Date Of Application &#xf161;</option>
                                 <option value="rating 1"> Rating &#xf160;</option>
                                 <option value="rating -1"> Rating &#xf161;</option>
                             </select>
@@ -65,7 +65,7 @@ const SortFeatureApplicant = ({ jobId, sortAprofiles }) => {
 
 SortFeatureApplicant.propTypes = {
     sortAprofiles: PropTypes.func.isRequired,
-    jobId: PropTypes.number.isRequired,
+    jobId: PropTypes.string.isRequired,
 };
 
 export default connect(null, { sortAprofiles })(SortFeatureApplicant);

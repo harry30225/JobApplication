@@ -63,7 +63,18 @@ const AprofileSchema = new mongoose.Schema({
     ],
     rating: {
         type: String,
-    }
+    },
+    ratings: [
+        {
+            rater: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'user'
+            },
+            rate: {
+                type: String
+            }
+        }
+    ]
 });
 
 module.exports = Aprofile = mongoose.model('aprofile', AprofileSchema)

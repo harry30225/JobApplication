@@ -12,7 +12,7 @@ import {
     APPLY_JOB,
     EDIT_JOB,
     DELETE_JOB,
-    GET_JOB
+    GET_JOB,
 } from './types';
 
 // get all jobs
@@ -241,6 +241,31 @@ export const deleteJob = (id) => async dispatch => {
             type: DELETE_JOB,
             payload: id
         })
+    } catch (err) {
+        const errors = err.response.data.errors;
+
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        }
+        dispatch({
+            type: JOB_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};
+
+// rate job
+
+export const rateJob = (rate, id) => async dispatch => {
+    const config = {
+        'headers': {
+            'Content-Type': 'application/json',
+        }
+    };
+    const body = JSON.stringify({ rate });
+    try {
+        const res = await axios.put(`/api/job/rate/${id}`, body, config);
+        dispatch(getAppliedJobs());
     } catch (err) {
         const errors = err.response.data.errors;
 

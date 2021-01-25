@@ -57,8 +57,19 @@ const JobSchema = new mongoose.Schema({
         }
     ],
     rating: {
-        type: String
+        type: String,
     },
+    ratings: [
+        {
+            rater: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'user'
+            },
+            rate: {
+                type: String
+            }
+        }
+    ],
     date: {
         type: Date,
         default: Date.now

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import { getAppliedJobs } from '../../actions/job';
+import RateJob from './RateJob';
 import Spinner from '../layout/Spinner';
 
 const MyApplications = ({ getAppliedJobs, job: { jobs, loading }, aprofile: { aprofile } }) => {
@@ -38,6 +39,7 @@ const MyApplications = ({ getAppliedJobs, job: { jobs, loading }, aprofile: { ap
                                             <p className="m-0">Status : Accepted</p>
                                             <p>Date of Joining : <Moment format="YYYY/MM/DD">{app.dateofjoining}</Moment></p>
                                             {/* Rate the Job */}
+                                            <RateJob JobId={job._id} />
                                         </Fragment>}
                                     </Fragment>)}
                                 </div>

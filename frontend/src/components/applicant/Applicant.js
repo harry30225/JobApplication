@@ -49,9 +49,9 @@ const Applicant = ({ getCurrentProfile, aprofile: { aprofile, loading }, auth: {
                                 ) : (<Fragment></Fragment>)}
 
                             </ul>
-                            <h2>Education</h2>
                             {aprofile.education.length > 0 ? (
                                 <Fragment>
+                                    <h2>Education</h2>
                                     {aprofile.education.map(edu => (<Fragment>
                                         <div>
                                             <i className="fa fa-university"></i>

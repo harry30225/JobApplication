@@ -19,25 +19,25 @@ const Recruiter = ({ getCurrentProfile, rprofile: { loading, rprofile }, auth: {
                     <Fragment>
                         <p>Kindly complete your profile</p>
                         <Link to="/create-rprofile" className="btn btn-info">
-                            Create Profile
+                            <i className="fa fa-user"></i> Create Profile
                         </Link>
                     </Fragment>
                 ) : (
                         <Fragment>
                             <Link to="/create-rprofile" className="btn btn-info m-2">
-                                Edit Profile
+                                <i className="fa fa-user"></i> Edit Profile
                         </Link>
                             <Link to="/add-job" className="btn btn-danger m-2">
-                                Add a Job
+                                <i className="fa fa-briefcase"></i> Add a Job
                             </Link>
                             <Link to="/rec-job-listing" className="btn btn-primary m-2">
-                                Jobs and Applications
+                                <i className="fa fa-folder"></i> Jobs and Applications
                             </Link>
                             <Link to="/selected-applicants" className="btn btn-dark m-2">
-                                Selected Applicants
+                                <i className="fa fa-envelope"></i> Selected Applicants
                             </Link>
-                            <p className="m-2"><i className="fa fa-briefcase"> Contact No. : {rprofile.contactno}</i></p>
-                            <p className="m-2"><i className="fa fa-briefcase"></i> Bio : {rprofile.bio}</p>
+                            <p className="m-2"><i className="fa fa-info"> Contact No. : {rprofile.contactno}</i></p>
+                            <p className="m-2"><i className="fa fa-info"></i> Bio : {rprofile.bio}</p>
                         </Fragment>
                     )}
             </Fragment>

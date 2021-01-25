@@ -37,10 +37,24 @@ router.get('/me', auth, async (req, res) => {
 router.get('/aprofiles/recruiter', auth, async (req, res) => {
     try {
         let jobs = await Job.find({ user: req.user.id });
-        let aprofiles = await Aprofile.find().populate('user', ['name', 'email']);
+        let aprofiles = await Aprofile.find().populate([
+            {
+                path: "user",
+                select: ["name", "email"],
+                model: User
+            },
+            {
+                path: "applications.job",
+                select: ["title", "typeofjob"],
+                model: Job
+            }
+        ]);
+        // for (var i = 0; i < aprofiles.length; i++) {
+        //     console.log(aprofiles[i].applications);
+        // }
         aprofiles = aprofiles.filter(function (aprofile) {
             for (i = 0; i < jobs.length; i++) {
-                if (aprofile.applications.filter(app => app.job.toString() === jobs[i]._id.toString() && app.accepted === true).length > 0) {
+                if (aprofile.applications.filter(app => app.job._id.toString() === jobs[i]._id.toString() && app.accepted === true).length > 0) {
                     return true
                 }
             }
@@ -169,7 +183,13 @@ router.put('/education', [auth, [
 // @desc        add profile application
 // @access      private
 
-router.put('/application', auth, async (req, res) => {
+router.put('/application', [auth, [
+    check('sop', 'SOP is required').not().isEmpty()
+]], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array });
+    }
     const {
         id,
         sop
@@ -289,11 +309,37 @@ router.put('/job/accept/:jobId/:aprofileId', auth, async (req, res) => {
         if (jobIndex === -1) {
             return res.status(404).json({ msg: 'No Job Found' });
         }
+
+        // reject all applications
+        for (var i = 0; i < aprofile.applications.length; i++) {
+            aprofile.applications[i].rejected = true;
+            aprofile.applications[i].shortlisted = false;
+            aprofile.applications[i].accepted = false;
+        }
+
+        // accept selected application
         aprofile.applications[jobIndex].rejected = false;
         aprofile.applications[jobIndex].shortlisted = false;
         aprofile.applications[jobIndex].accepted = true;
         aprofile.applications[jobIndex].dateofjoining = Date.now();
 
+
+        // rejected all applications
+        const jobs = await Job.find();
+        for (var i = 0; i < jobs.length; i++) {
+            for (var j = 0; j < jobs[i].applications.length; j++) {
+                if (jobs[i].applications[j].applicant.toString() === aprofile.user.toString()) {
+                    jobs[i].applications[j].reject = true;
+                    jobs[i].applications[j].shortlist = false;
+                    jobs[i].applications[j].accepted = false;
+                }
+            }
+            await jobs[i].save();
+        }
+
+        //await jobs.save();
+
+        // accept selected application
         const job = await Job.findById(req.params.jobId);
         const appIndex = job.applications.findIndex(function (app) {
             return app.applicant.toString() === aprofile.user.toString()
@@ -308,11 +354,53 @@ router.put('/job/accept/:jobId/:aprofileId', auth, async (req, res) => {
 
         await aprofile.save();
         await job.save();
-        res.json({ msg: 'Application Rejected' });
+        res.json({ msg: 'Application Accepted' });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
-})
+});
+
+// @route       PUT api/aprofile/rate/:aprofileId
+// @desc        Rate applicant
+// @access      private
+
+router.put('/rate/:aprofileId', [auth, [
+    check('rate').not().isEmpty().isIn(['0', '1', '2', '3', '4', '5'])
+]], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array });
+    }
+    const { rate } = req.body;
+    const newRating = {
+        rater: req.user.id,
+        rate
+    };
+    try {
+        const aprofile = await Aprofile.findById(req.params.aprofileId);
+        if (!aprofile) {
+            return res.status(404).json({ msg: 'No Profile for this ID' });
+        }
+        if (aprofile.ratings.filter(rating => rating.rater.toString() === req.user.id).length > 0) {
+            return res.status(400).json({ msg: 'The Applicant is already rated by you' });
+        }
+        aprofile.ratings.unshift(newRating);
+
+        let krate = 0;
+        for (var i = 0; i < aprofile.ratings.length; i++) {
+            krate = krate + parseInt(aprofile.ratings[i].rate);
+        }
+        krate = krate / aprofile.ratings.length;
+        aprofile.rating = krate.toString();
+
+        await aprofile.save();
+        res.json(aprofile);
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).send('Server Error');
+    }
+});
+
 
 module.exports = router;
