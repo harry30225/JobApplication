@@ -72,6 +72,7 @@ const JobApplicants = ({ match, getProfilesByJobId, getJobById, setAlert, reject
                                             </Fragment>}
                                             {app.shortlisted === false && app.accepted === true && <Fragment>
                                                 <Link className="btn btn-info m-1 login">Accepted</Link>
+
                                             </Fragment>}
                                         </Fragment>)}
                                     </div>

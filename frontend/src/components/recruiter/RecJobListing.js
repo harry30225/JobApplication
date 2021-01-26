@@ -21,9 +21,9 @@ const RecJobListing = ({ getMadeJobs, deleteJob, job: { jobs, loading } }) => {
                                 <div className="container bg-light m-1 border border-success">
                                     <Link to={`/job-applicants/${job._id}`}><h3 className="job-title title"> {job.title}</h3></Link>
                                     <p className="m-0"><span className="field">Salary</span> : <span className="title"> {job.salary}</span></p>
-                                    <p className="m-0"><span className="field">Date of Posting </span>: <span className="title"><Moment format="YYYY/MM/DD"> {job.date}</Moment></span></p>
+                                    <p className="m-0"><span className="field">Date of Posting </span>: <span className="title"><Moment format="YYYY/MM/DD">{job.date}</Moment></span></p>
                                     <p className="m-0"> <span className="field">Duration</span> : {job.duration === '0' ? (<span className="title"> Indefinite</span>) : (<span className="title"> {job.duration} Month</span>)}</p>
-                                    <p className="m-0"><span className="field">Deadline</span> : <span className="title"><Moment format="YYYY/MM/DD"> {job.deadline}</Moment></span></p>
+                                    <p className="m-0"><span className="field">Deadline</span> : <span className="title"><Moment format="YYYY/MM/DD">{job.deadline}</Moment></span></p>
                                     <p className="m-0"><span className="field">Number of Applicants </span>: <span className="title"> {job.applications.filter(app => app.reject === false).length}</span></p>
                                     <p className="m-0"><span className="field">Maximum of Applications </span>: <span className="title"> {job.maxap.application}</span></p>
                                     <p className="m-0"><span className="field">Maximum of Positions </span>: <span className="title"> {job.maxap.position}</span></p>

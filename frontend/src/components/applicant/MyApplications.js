@@ -24,7 +24,7 @@ const MyApplications = ({ getAppliedJobs, job: { jobs, loading }, aprofile: { ap
                                     <p className="m-0"><span className="field">Rating</span> :<span className="title"> {job.rating}</span></p>
                                     <p className="m-0"><span className="field">Salary</span> : <span className="title"> {job.salary}</span></p>
                                     <p className="m-0"> <span className="field">Duration</span> : {job.duration === '0' ? (<span className="title"> Indefinite</span>) : (<span className="title"> {job.duration}</span>)}</p>
-                                    <p className="m-0"><span className="field">Deadline</span> : <span className="title"><Moment format="YYYY/MM/DD"> {job.deadline}</Moment></span></p>
+                                    <p className="m-0"><span className="field">Deadline</span> : <span className="title"><Moment format="YYYY/MM/DD">{job.deadline}</Moment></span></p>
                                     {aprofile.applications.map(app => app.job === job._id && <Fragment>
                                         {app.rejected === false && app.shortlisted === false && app.accepted === false && <Fragment>
                                             <p className="m-0"><span className="field">Status</span> : <span className="title"> Pending</span></p>
@@ -37,7 +37,7 @@ const MyApplications = ({ getAppliedJobs, job: { jobs, loading }, aprofile: { ap
                                         </Fragment>}
                                         {app.rejected === false && app.shortlisted === false && app.accepted === true && <Fragment>
                                             <p className="m-0"><span className="field">Status</span> :<span className="title"> Accepted</span></p>
-                                            <p><span className="field">Date of Joining</span> : <span className="title"><Moment format="YYYY/MM/DD"> {app.dateofjoining}</Moment></span> </p>
+                                            <p><span className="field">Date of Joining</span> : <span className="title"><Moment format="YYYY/MM/DD">{app.dateofjoining}</Moment></span> </p>
                                             {/* Rate the Job */}
                                             <RateJob JobId={job._id} />
                                         </Fragment>}

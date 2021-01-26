@@ -38,7 +38,7 @@ const JobListing = ({ getJobs, setAlert, job: { loading, jobs }, aprofile: { apr
                                         <p className="m-0"> <span className="field">Salary </span>: <span className="title"> {job.salary}</span></p>
                                         <p className="m-0"> <span className="field">Type Of Job </span>: <span className="title"> {job.typeofjob}</span></p>
                                         <p className="m-0"> <span className="field">Duration </span>: {job.duration === '0' ? (<span className="title"> Indefinite</span>) : (<span className="title"> {job.duration} Month</span>)}</p>
-                                        <p className="m-0"> <span className="field">Deadline </span>: <span className="title"><Moment format="YYYY/MM/DD"> {job.deadline}</Moment></span></p>
+                                        <p className="m-0"> <span className="field">Deadline </span>: <span className="title"><Moment format="YYYY/MM/DD">{job.deadline}</Moment></span></p>
                                         {parseInt(job.maxap.application) <= job.applications.filter(app => app.reject === false).length || parseInt(job.maxap.position) <= job.applications.filter(app => app.accepted === true).length ? (
                                             <Fragment>
                                                 <Link className="btn btn-danger m-1 login">Full</Link>

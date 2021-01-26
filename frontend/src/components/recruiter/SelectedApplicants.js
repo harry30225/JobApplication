@@ -27,7 +27,7 @@ const SelectedApplicants = ({ getAcceptedProfileByRec, aprofile }) => {
                                             <h3 className="title"> {aprofile.user.name}</h3>
                                             <p className="m-0"> <span className="field">Title</span> :<span className="title"> {app.job.title}</span></p>
                                             <p className="m-0"><span className="field">Type Of Job</span> : <span className="title"> {app.job.typeofjob}</span></p>
-                                            <p className="m-0"><span className="field">Date Of Joining</span> : <span className="title"><Moment format="YYYY/MM/DD"> {app.dateofjoining}</Moment></span></p>
+                                            <p className="m-0"><span className="field">Date Of Joining</span> : <span className="title"><Moment format="YYYY/MM/DD">{app.dateofjoining}</Moment></span></p>
                                             <RateApplicant AprofileId={aprofile._id} />
                                         </Fragment>)}
                                     </div>
