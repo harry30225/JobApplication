@@ -10,18 +10,18 @@ const Navbar = ({ logoutUser, auth: { loading, isAuthenticated } }) => {
             <div className="container-fluid p-0 m-0">
                 <div className="navbar-header">
                     <Link className="navbar-brand" to='/'><i class="fa fa-tags" ></i>
-                        <span classname="brand-text"> JoBuzz</span></Link>
+                        <span classname="brand-text heading"> JoBuzz</span></Link>
                 </div>
                 <ul className=" navbar-right d-flex">
                     {loading || !isAuthenticated ? (
                         <Fragment>
-                            <li><Link to='/register' className="navbar-links"> <i className="fa fa-user"></i><span> Sign Up</span></Link></li>
-                            <li><Link to='/login' className="navbar-links"> <i className="fa fa-sign-in"></i><span> Login</span></Link></li>
+                            <li><Link to='/register' className="navbar-links"> <i className="fa fa-user"></i><span className="login"> Sign Up</span></Link></li>
+                            <li><Link to='/login' className="navbar-links"> <i className="fa fa-sign-in"></i><span className="login"> Login</span></Link></li>
                         </Fragment>
                     ) : (
                             <Fragment>
-                                <li><Link to="/dashboard" className="navbar-links"><i className="fa fa-user"></i><span>Dashboard</span></Link></li>
-                                <li><Link onClick={logoutUser} to='/' className="navbar-links"><i className="fa fa-sign-out"></i><span>Logout</span></Link></li>
+                                <li><Link to="/dashboard" className="navbar-links"><i className="fa fa-user"></i><span className="login">Dashboard</span></Link></li>
+                                <li><Link onClick={logoutUser} to='/' className="navbar-links"><i className="fa fa-sign-out"></i><span className="login">Logout</span></Link></li>
                             </Fragment>
                         )}
                 </ul>

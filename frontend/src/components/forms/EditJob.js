@@ -34,7 +34,7 @@ const EditJob = ({ match, setAlert, editJob, history }) => {
     };
     return (
         <Fragment>
-            <h1>
+            <h1 className="text-center heading">
                 Edit Job
       </h1>
             <form className="form" onSubmit={e => onSubmit(e)}>
@@ -51,7 +51,10 @@ const EditJob = ({ match, setAlert, editJob, history }) => {
                     <small>Deadline for Job Application</small>
                 </div>
 
-                <input type="submit" className="btn btn-primary my-1" value="AddJob" />
+                <div className="text-center login">
+                    <button type="submit" className="btn btn-dark m-1 login"> Edit Job <i className="fa fa-briefcase"></i></button>
+                    <Link className="btn btn-light m-1 login" to="/rec-job-listing">Go Back <i className="fa fa-backward"></i></Link>
+                </div>
             </form>
         </Fragment>
     )

@@ -34,7 +34,7 @@ const SortFeatureApplicant = ({ jobId, sortAprofiles }) => {
 
     return (
         <Fragment>
-            <button onClick={showModal} className="btn btn-warning m-1">Sort <i className="fa fa-user"></i></button>
+            <button onClick={showModal} className="btn btn-warning m-1 login">Sort <i className="fa fa-user"></i></button>
             <Modal show={isOpen} onHide={hideModal}>
                 <Modal.Header>
                     <Modal.Title>Sort Applicants</Modal.Title>

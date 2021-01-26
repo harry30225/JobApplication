@@ -33,11 +33,11 @@ const AddEducation = ({ addEducation, history }) => {
     };
     return (
         <Fragment>
-            <h1>
+            <h1 className="text-center heading">
                 Add Your Education
       </h1>
-            <p>
-                <i className="fas fa-graduation-cap"></i> Add any school, bootcamp, etc that
+            <p className="text-center text-warning login">
+                <i className="fa fa-graduation-cap"></i> Add any school, bootcamp, etc that
         you have attended
       </p>
             <form className="form" onSubmit={e => onSubmit(e)}>
@@ -74,8 +74,10 @@ const AddEducation = ({ addEducation, history }) => {
                     <h4>To Date</h4>
                     <input type="date" name="to" value={to} onChange={e => onChange(e)} disabled={toDateDisabled ? 'disabled' : ''} />
                 </div>
-                <input type="submit" className="btn btn-primary my-1" value="Add Education" />
-                <Link className="btn btn-light my-1" to="/dashboard">Go Back</Link>
+                <div className="text-center login">
+                    <button type="submit" className="btn btn-warning m-1 login"> Add Education <i className="fa fa-graduation-cap"></i></button>
+                    <Link className="btn btn-light m-1 login" to="/dashboard">Go Back <i className="fa fa-backward"></i></Link>
+                </div>
             </form>
 
         </Fragment >

@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { getAcceptedProfileByRec } from '../../actions/aprofile';
 import Spinner from '../layout/Spinner';
@@ -12,23 +11,23 @@ import SortSelected from './SortSelected';
 const SelectedApplicants = ({ getAcceptedProfileByRec, aprofile }) => {
     useEffect(() => {
         getAcceptedProfileByRec();
-    }, []);
+    }, [getAcceptedProfileByRec]);
     return (
         <Fragment>
             {aprofile.loading ? <Spinner /> : (
                 <Fragment>
                     {aprofile.aprofiles.length > 0 ? (
                         <Fragment>
-                            <h1>Selected Applicants</h1>
+                            <h1 className="text-center heading">Selected Applicants</h1>
                             <SortSelected />
                             {aprofile.aprofiles.map(aprofile => (
                                 <Fragment>
                                     <div className="container bg-light m-1 border border-success">
                                         {aprofile.applications.map(app => app.accepted === true && <Fragment>
-                                            <h3>{aprofile.user.name}</h3>
-                                            <p className="m-0"> Title : {app.job.title}</p>
-                                            <p className="m-0">Type Of Job : {app.job.typeofjob}</p>
-                                            <p className="m-0">Date Of Joining : <Moment format="YYYY/MM/DD">{app.dateofjoining}</Moment></p>
+                                            <h3 className="title"> {aprofile.user.name}</h3>
+                                            <p className="m-0"> <span className="field">Title</span> :<span className="title"> {app.job.title}</span></p>
+                                            <p className="m-0"><span className="field">Type Of Job</span> : <span className="title"> {app.job.typeofjob}</span></p>
+                                            <p className="m-0"><span className="field">Date Of Joining</span> : <span className="title"><Moment format="YYYY/MM/DD"> {app.dateofjoining}</Moment></span></p>
                                             <RateApplicant AprofileId={aprofile._id} />
                                         </Fragment>)}
                                     </div>

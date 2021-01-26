@@ -1,5 +1,4 @@
 import React, { useState, Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import "bootstrap/dist/css/bootstrap.min.css";
 import PropTypes from 'prop-types';
@@ -35,7 +34,7 @@ const RateJob = ({ rateJob, JobId }) => {
 
     return (
         <Fragment>
-            <button onClick={showModal} className="btn btn-warning m-1">Rate Job <i className="fa fa-briefcase"></i></button>
+            <button onClick={showModal} className="btn btn-warning m-1 login">Rate Job <i className="fa fa-briefcase"></i></button>
             <Modal show={isOpen} onHide={hideModal}>
                 <Modal.Header>
                     <Modal.Title>Rate Job</Modal.Title>

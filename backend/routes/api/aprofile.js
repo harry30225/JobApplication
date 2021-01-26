@@ -3,6 +3,7 @@ const request = require('request');
 const config = require('config');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
+const nodemailer = require('nodemailer');
 
 const auth = require('../../middleware/auth');
 
@@ -302,7 +303,7 @@ router.put('/job/shortlist/:jobId/:aprofileId', auth, async (req, res) => {
 
 router.put('/job/accept/:jobId/:aprofileId', auth, async (req, res) => {
     try {
-        const aprofile = await Aprofile.findById(req.params.aprofileId);
+        const aprofile = await Aprofile.findById(req.params.aprofileId).populate('user', ['name', 'email']);
         const jobIndex = aprofile.applications.findIndex(function (app) {
             return app.job.toString() === req.params.jobId
         })
@@ -342,7 +343,7 @@ router.put('/job/accept/:jobId/:aprofileId', auth, async (req, res) => {
         // accept selected application
         const job = await Job.findById(req.params.jobId);
         const appIndex = job.applications.findIndex(function (app) {
-            return app.applicant.toString() === aprofile.user.toString()
+            return app.applicant.toString() === aprofile.user._id.toString()
         })
 
         if (appIndex === -1) {
@@ -351,6 +352,31 @@ router.put('/job/accept/:jobId/:aprofileId', auth, async (req, res) => {
         job.applications[appIndex].reject = false;
         job.applications[appIndex].shortlist = false;
         job.applications[appIndex].accepted = true;
+
+        // send email
+
+        let mailTransporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'hawk2523@gmail.com',
+                pass: 'ss@dsu3ks'
+            }
+        });
+
+        let mailDetails = {
+            from: 'hawk2523@gmail.com',
+            to: aprofile.user.email,
+            subject: 'Accepted Email',
+            text: 'Congrats you are accepted for your job application' + job.title
+        };
+
+        mailTransporter.sendMail(mailDetails, function (err, data) {
+            if (err) {
+                console.log('Error Occurs');
+            } else {
+                console.log('Email sent successfully');
+            }
+        });
 
         await aprofile.save();
         await job.save();

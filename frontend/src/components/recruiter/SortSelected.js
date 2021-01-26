@@ -1,10 +1,9 @@
 import React, { useState, Fragment } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import "bootstrap/dist/css/bootstrap.min.css";
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-const SortSelected = ({ }) => {
+const SortSelected = () => {
     const [Sortdata, SetSortData] = useState({
         sort: ""
     });
@@ -32,7 +31,7 @@ const SortSelected = ({ }) => {
 
     return (
         <Fragment>
-            <button onClick={showModal} className="btn btn-warning m-1">Sort <i className="fa fa-envelope"></i></button>
+            <button onClick={showModal} className="btn btn-warning m-1 login">Sort <i className="fa fa-envelope"></i></button>
             <Modal show={isOpen} onHide={hideModal}>
                 <Modal.Header>
                     <Modal.Title>Sort Selected Applicants</Modal.Title>
@@ -63,7 +62,5 @@ const SortSelected = ({ }) => {
     )
 };
 
-SortSelected.propTypes = {
-};
 
 export default connect(null, {})(SortSelected);

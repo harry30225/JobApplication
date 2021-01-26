@@ -24,27 +24,29 @@ const CreateAprofile = ({ createProfile, history }) => {
 
     return (
         <Fragment>
-            <h1> Create Profile</h1>
-            <p>Complete your profile</p>
-            <h3>Skills</h3>
-            <u>
-                <li><i className="fa fa-tag">JavaScript</i></li>
-                <li><i className="fa fa-tag">Python</i></li>
-                <li><i className="fa fa-tag">React</i></li>
-                <li><i className="fa fa-tag">MongoDb</i></li>
-                <li><i className="fa fa-tag">CSS</i></li>
-                <li><i className="fa fa-tag">DotNet</i></li>
-                <li><i className="fa fa-tag">Angular</i></li>
-                <li><i className="fa fa-tag">Select from these or add your more skills</i></li>
-            </u>
+            <h1 className="heading text-center"> Create Profile</h1>
+            <p className="login text-center text-danger">Make Your Profile</p>
+            <h3 className="heading text-center text-info">Skills</h3>
+            <ul>
+                <li className="login skill"><i className="fa fa-tag">JavaScript</i></li>
+                <li className="login skill"><i className="fa fa-tag">Python</i></li>
+                <li className="login skill"><i className="fa fa-tag">React</i></li>
+                <li className="login skill"><i className="fa fa-tag">MongoDb</i></li>
+                <li className="login skill"><i className="fa fa-tag">CSS</i></li>
+                <li className="login skill"><i className="fa fa-tag">DotNet</i></li>
+                <li className="login skill"><i className="fa fa-tag">Angular</i></li>
+                <li className="login skill"><i className="fa fa-tag">Select from these or add your more skills</i></li>
+            </ul>
             <form className="form" onSubmit={e => onSubmit(e)}>
                 <div className="form-group">
                     <input type="text" placeholder="* Skills" name="skills" value={skills} onChange={e => onChange(e)} />
                     <small>Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
             </small>
                 </div>
-                <input type="submit" className="btn btn-primary m-1" value="CreateProfile" />
-                <Link className="btn btn-light m-1" to="/dashboard">Go Back</Link>
+                <div className="text-center login">
+                    <button type="submit" className="btn btn-primary m-1 login"> Create Profile <i className="fa fa-tags"></i></button>
+                    <Link className="btn btn-light m-1 login" to="/dashboard">Go Back <i className="fa fa-backward"></i></Link>
+                </div>
             </form>
         </Fragment>
     )

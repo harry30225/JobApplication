@@ -1,5 +1,4 @@
 import React, { useState, Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import "bootstrap/dist/css/bootstrap.min.css";
 import PropTypes from 'prop-types';
@@ -35,7 +34,7 @@ const RateApplicant = ({ rateAprofile, AprofileId }) => {
 
     return (
         <Fragment>
-            <button onClick={showModal} className="btn btn-info m-1">Rate Applicant <i className="fa fa-user"></i></button>
+            <button onClick={showModal} className="btn btn-info m-1 login">Rate Applicant <i className="fa fa-user"></i></button>
             <Modal show={isOpen} onHide={hideModal}>
                 <Modal.Header>
                     <Modal.Title>Rate Applicant</Modal.Title>

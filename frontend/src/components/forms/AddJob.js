@@ -50,7 +50,7 @@ const AddJob = ({ setAlert, addJob, history }) => {
     };
     return (
         <Fragment>
-            <h1>
+            <h1 className="text-center heading">
                 Add a Job
       </h1>
             <form className="form" onSubmit={e => onSubmit(e)}>
@@ -93,9 +93,10 @@ const AddJob = ({ setAlert, addJob, history }) => {
                     <input type="text" name="salary" value={salary} onChange={e => onChange(e)} />
                     <small>Salary amounted for the Job per month</small>
                 </div>
-
-                <input type="submit" className="btn btn-primary my-1" value="AddJob" />
-                <Link className="btn btn-light my-1" to="/dashboard">Go Back</Link>
+                <div className="text-center login">
+                    <button type="submit" className="btn btn-danger m-1 login"> Add Job <i className="fa fa-briefcase"></i></button>
+                    <Link className="btn btn-light m-1 login" to="/dashboard">Go Back <i className="fa fa-backward"></i></Link>
+                </div>
             </form>
         </Fragment>
     )

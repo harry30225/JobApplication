@@ -34,7 +34,7 @@ const SortFeature = ({ sortJobs }) => {
 
     return (
         <Fragment>
-            <button onClick={showModal} className="btn btn-warning m-1">Sort <i className="fa fa-briefcase"></i></button>
+            <button onClick={showModal} className="btn btn-warning m-1 login">Sort <i className="fa fa-briefcase"></i></button>
             <Modal show={isOpen} onHide={hideModal}>
                 <Modal.Header>
                     <Modal.Title>Sort Jobs</Modal.Title>

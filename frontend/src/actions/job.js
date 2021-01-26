@@ -264,7 +264,7 @@ export const rateJob = (rate, id) => async dispatch => {
     };
     const body = JSON.stringify({ rate });
     try {
-        const res = await axios.put(`/api/job/rate/${id}`, body, config);
+        await axios.put(`/api/job/rate/${id}`, body, config);
         dispatch(getAppliedJobs());
     } catch (err) {
         const errors = err.response.data.errors;

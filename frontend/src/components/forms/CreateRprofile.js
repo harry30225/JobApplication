@@ -25,8 +25,8 @@ const CreateRprofile = ({ createProfile, history }) => {
 
     return (
         <Fragment>
-            <h1> Create Profile</h1>
-            <p>Complete your profile</p>
+            <h1 className="text-center heading"> Create Profile</h1>
+            <p className="text-center text-info login"> <i className="fa fa-user"></i>Complete your profile</p>
             <form className="form" onSubmit={e => onSubmit(e)}>
                 <div className="form-group">
                     <input type="text" placeholder="Contact No" name="contactno" value={contactno} onChange={e => onChange(e)} />
@@ -37,9 +37,10 @@ const CreateRprofile = ({ createProfile, history }) => {
                     <textarea placeholder="A short bio of yourself" name="bio" value={bio} onChange={e => onChange(e)}></textarea>
                     <small> Your Short Bio</small>
                 </div>
-
-                <input type="submit" className="btn btn-primary m-1" value="CreateProfile" />
-                <Link className="btn btn-light m-1" to="/dashboard">Go Back</Link>
+                <div className="text-center login">
+                    <button type="submit" className="btn btn-info m-1 login"> Create Profile <i className="fa fa-tags"></i></button>
+                    <Link className="btn btn-light m-1 login" to="/dashboard">Go Back <i className="fa fa-backward"></i></Link>
+                </div>
             </form>
         </Fragment>
     )

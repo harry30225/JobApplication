@@ -54,7 +54,7 @@ const FilterFeature = ({ setAlert, filterJobs }) => {
 
     return (
         <Fragment>
-            <button onClick={showModal} className="btn btn-info m-1">Filter <i className="fa fa-briefcase"></i></button>
+            <button onClick={showModal} className="btn btn-info m-1 login">Filter <i className="fa fa-briefcase"></i></button>
             <Modal show={isOpen} onHide={hideModal}>
                 <Modal.Header>
                     <Modal.Title>Filter Jobs</Modal.Title>

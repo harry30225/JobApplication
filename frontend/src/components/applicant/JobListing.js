@@ -13,7 +13,7 @@ import FilterFeature from '../layout/FilterFeature';
 const JobListing = ({ getJobs, setAlert, job: { loading, jobs }, aprofile: { aprofile } }) => {
     useEffect(() => {
         getJobs();
-    }, []);
+    }, [getJobs]);
 
     return (
         <Fragment>
@@ -23,8 +23,8 @@ const JobListing = ({ getJobs, setAlert, job: { loading, jobs }, aprofile: { apr
                 </Fragment>
             ) : (
                     <Fragment>
-                        <Link onClick={getJobs} to='/job-listing' className="btn btn-primary m-2"><i className="fa fa-tag"></i> Job Listing</Link>
-                        <h1>Job Listing</h1>
+                        <Link onClick={getJobs} to='/job-listing' className="btn btn-primary m-2 login"><i className="fa fa-tag"></i> Job Listing</Link>
+                        <h1 className="heading text-center">Job Listing</h1>
                         <SearchFeature />
                         <SortFeature />
                         <FilterFeature />
@@ -32,16 +32,16 @@ const JobListing = ({ getJobs, setAlert, job: { loading, jobs }, aprofile: { apr
                             <Fragment>
                                 {jobs.map(job => (
                                     <div className="container bg-light m-1 border border-success">
-                                        <h3 className="job-title">{job.title}</h3>
-                                        <p className="m-0">Recruiter Name : {job.user.name}</p>
-                                        <p className="m-0">Rating : {job.rating}</p>
-                                        <p className="m-0">Salary : {job.salary}</p>
-                                        <p className="m-0">Type Of Job : {job.typeofjob}</p>
-                                        <p className="m-0"> Duration : {job.duration === '0' ? (<span>Indefinite</span>) : (<span>{job.duration} Month</span>)}</p>
-                                        <p className="m-0">Deadline : <Moment format="YYYY/MM/DD">{job.deadline}</Moment></p>
+                                        <h3 className="job-title title">{job.title}</h3>
+                                        <p className="m-0"> <span className="field">Recruiter Name </span> :<span className="title"> {job.user.name} </span></p>
+                                        <p className="m-0"> <span className="field">Rating </span>: <span className="title"> {job.rating}</span></p>
+                                        <p className="m-0"> <span className="field">Salary </span>: <span className="title"> {job.salary}</span></p>
+                                        <p className="m-0"> <span className="field">Type Of Job </span>: <span className="title"> {job.typeofjob}</span></p>
+                                        <p className="m-0"> <span className="field">Duration </span>: {job.duration === '0' ? (<span className="title"> Indefinite</span>) : (<span className="title"> {job.duration} Month</span>)}</p>
+                                        <p className="m-0"> <span className="field">Deadline </span>: <span className="title"><Moment format="YYYY/MM/DD"> {job.deadline}</Moment></span></p>
                                         {parseInt(job.maxap.application) <= job.applications.filter(app => app.reject === false).length || parseInt(job.maxap.position) <= job.applications.filter(app => app.accepted === true).length ? (
                                             <Fragment>
-                                                <Link className="btn btn-danger m-1">Full</Link>
+                                                <Link className="btn btn-danger m-1 login">Full</Link>
                                             </Fragment>
                                         ) : (
                                                 <Fragment>
@@ -49,17 +49,17 @@ const JobListing = ({ getJobs, setAlert, job: { loading, jobs }, aprofile: { apr
                                                         <Fragment>
                                                             {aprofile.applications.filter(app => app.rejected === false).length >= 10 ? (
                                                                 <Fragment>
-                                                                    <Link onClick={() => setAlert('Can not apply for more than 10 Applications', 'danger')} className="btn btn-primary m-1"> Apply </Link>
+                                                                    <Link onClick={() => setAlert('Can not apply for more than 10 Applications', 'danger')} className="btn btn-primary m-1 login"> Apply </Link>
                                                                 </Fragment>
                                                             ) : (
                                                                     <Fragment>
-                                                                        <Link to={`/apply-job/${job._id}`} className="btn btn-primary m-1"> Apply</Link>
+                                                                        <Link to={`/apply-job/${job._id}`} className="btn btn-primary m-1 login"> Apply</Link>
                                                                     </Fragment>
                                                                 )}
                                                         </Fragment>
                                                     ) : (
                                                             <Fragment>
-                                                                <Link className="btn btn-warning m-1">Applied</Link>
+                                                                <Link className="btn btn-warning m-1 login">Applied</Link>
                                                             </Fragment>
                                                         )}
                                                 </Fragment>

@@ -18,16 +18,17 @@ const JobApplicants = ({ match, getProfilesByJobId, getJobById, setAlert, reject
         <Fragment>
             {loading || job.loading ? <Spinner /> : (
                 <Fragment>
-                    <h1>Applicants</h1>
+                    <h1 className="text-center heading">Applicants</h1>
                     {aprofiles.length > 0 ? (
                         <Fragment>
                             <SortFeatureApplicant jobId={match.params.id} />
+                            <Link className="btn btn-light m-1 login" to="/rec-job-listing">Go Back <i className="fa fa-backward"></i></Link>
                             {aprofiles.map(aprofile => (
                                 <Fragment>
                                     <div className="container bg-light m-1 border border-success">
                                         {aprofile.applications.map(app => app.job === match.params.id && app.rejected === false && <Fragment>
-                                            <h3>{aprofile.user.name}</h3>
-                                            <h3>Skills</h3>
+                                            <h3 className="text-center title">{aprofile.user.name}</h3>
+                                            <h3 className="field">Skills</h3>
                                             <ul>
                                                 {aprofile.skills.length > 0 ? (
                                                     <Fragment>
@@ -38,7 +39,7 @@ const JobApplicants = ({ match, getProfilesByJobId, getJobById, setAlert, reject
                                                 ) : (<Fragment></Fragment>)}
 
                                             </ul>
-                                            <h3>Education</h3>
+                                            <h3 className="field">Education</h3>
                                             {aprofile.education.length > 0 ? (
                                                 <Fragment>
                                                     {aprofile.education.map(edu => (<Fragment>
@@ -54,23 +55,23 @@ const JobApplicants = ({ match, getProfilesByJobId, getJobById, setAlert, reject
                                                     ))}
                                                 </Fragment>
                                             ) : (<Fragment></Fragment>)}
-                                            <p className="m-0">rating : {aprofile.rating}</p>
-                                            <p className="m-0"> Date of Application : <Moment format="YYYY/MM/DD">{app.dateofapplication}</Moment></p>
-                                            <p className="m-0">SOP : {app.sop}</p>
+                                            <p className="m-0"><span className="field">Rating</span> : {aprofile.rating}</p>
+                                            <p className="m-0"> <span className="field">Date of Application</span> : <Moment format="YYYY/MM/DD">{app.dateofapplication}</Moment></p>
+                                            <p className="m-0"> <span className="field">SOP</span> : {app.sop}</p>
                                             {app.shortlisted === false && app.accepted === false && <Fragment>
-                                                <Link onClick={() => shortlistApplication(match.params.id, aprofile._id)} className="btn btn-primary m-1">Shortlist</Link>
-                                                <Link onClick={() => rejectApplication(match.params.id, aprofile._id)} className="btn btn-danger m-1">Reject</Link>
+                                                <Link onClick={() => shortlistApplication(match.params.id, aprofile._id)} className="btn btn-primary m-1 login">Shortlist</Link>
+                                                <Link onClick={() => rejectApplication(match.params.id, aprofile._id)} className="btn btn-danger m-1 login">Reject</Link>
                                             </Fragment>}
                                             {app.shortlisted === true && app.accepted === false && <Fragment>
                                                 {parseInt(job.job.maxap.position) > aprofile.applications.filter(app => app.accepted === true).length ? (
-                                                    <Link onClick={() => acceptApplication(match.params.id, aprofile._id)} className="btn btn-warning m-1">Accept</Link>
+                                                    <Link onClick={() => acceptApplication(match.params.id, aprofile._id)} className="btn btn-warning m-1 login">Accept</Link>
                                                 ) : (
-                                                        <Link onClick={() => setAlert('No more positions left for this job', 'danger')} className="btn btn-warning m-1">Accept</Link>
+                                                        <Link onClick={() => setAlert('No more positions left for this job', 'danger')} className="btn btn-warning m-1 login">Accept</Link>
                                                     )}
-                                                <Link onClick={() => rejectApplication(match.params.id, aprofile._id)} className="btn btn-danger m-1">Reject</Link>
+                                                <Link onClick={() => rejectApplication(match.params.id, aprofile._id)} className="btn btn-danger m-1 login">Reject</Link>
                                             </Fragment>}
                                             {app.shortlisted === false && app.accepted === true && <Fragment>
-                                                <Link className="btn btn-info m-1">Accepted</Link>
+                                                <Link className="btn btn-info m-1 login">Accepted</Link>
                                             </Fragment>}
                                         </Fragment>)}
                                     </div>

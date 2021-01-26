@@ -225,7 +225,7 @@ export const rateAprofile = (rate, id) => async dispatch => {
     };
     const body = JSON.stringify({ rate });
     try {
-        const res = await axios.put(`/api/aprofile/rate/${id}`, body, config);
+        await axios.put(`/api/aprofile/rate/${id}`, body, config);
         dispatch(getAcceptedProfileByRec());
     } catch (err) {
         const errors = err.response.data.errors;
