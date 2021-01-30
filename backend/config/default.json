@@ -1,4 +1,4 @@
 {
-    "mongoURI": "mongodb+srv://harshitsharma:harshitsharma@jobapplication.k4xen.mongodb.net/JobApplication?retryWrites=true&w=majority",
+    "mongoURI": "mongodb+srv://username:password@jobapplication.k4xen.mongodb.net/JobApplication?retryWrites=true&w=majority",
     "jwtToken": "mysecrettoken"
 }
