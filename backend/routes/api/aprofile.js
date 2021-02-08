@@ -358,13 +358,13 @@ router.put('/job/accept/:jobId/:aprofileId', auth, async (req, res) => {
         let mailTransporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'hawk2523@gmail.com',
-                pass: 'ss@dsu3ks'
+                user: 'username',
+                pass: 'password'
             }
         });
 
         let mailDetails = {
-            from: 'hawk2523@gmail.com',
+            from: 'username',
             to: aprofile.user.email,
             subject: 'Accepted Email',
             text: 'Congrats you are accepted for your job application' + job.title
