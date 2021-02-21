@@ -22,3 +22,5 @@
     * npm install
     * npm start
     * This would start the backend
+
+### Developed by :heart: and :coffee: by Harshit Sharma
